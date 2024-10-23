@@ -6,7 +6,7 @@ import { useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
 import {authProvider, dataProvider, liveProvider} from "./providers";
-import {Home, ForgotPassword, Login, Register} from "./pages";
+import {Home, ForgotPassword, Login, Register, MemberList} from "./pages";
 
 import routerBindings, {
   CatchAllNavigate,
@@ -17,6 +17,7 @@ import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 import Layout from "./components/layout";
 import { resources } from "./config/resources";
+import Create from "./pages/Member/create";
 
 
 
@@ -58,6 +59,10 @@ function App() {
                   </Authenticated>
                   }>
                     <Route index element = {<Home />} />
+                    <Route path="/members">
+                      <Route index element={<MemberList />}/>
+                      <Route path="new" element={<Create/>} />
+                    </Route>
                 </Route>
                 </Routes>
                 <RefineKbar />

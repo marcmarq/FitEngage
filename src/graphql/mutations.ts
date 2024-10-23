@@ -18,7 +18,7 @@ export const UPDATE_USER_MUTATION = gql`
 `;
 
 // Mutation to create company
-export const CREATE_COMPANY_MUTATION = gql`
+export const CREATE_MEMBER_MUTATION = gql`
   mutation CreateCompany($input: CreateOneCompanyInput!) {
     createOneCompany(input: $input) {
       id

@@ -121,8 +121,8 @@ export const DASHBOARD_LATEST_ACTIVITIES_AUDITS_QUERY = gql`
   }
 `;
 
-// Query to get companies list
-export const COMPANIES_LIST_QUERY = gql`
+// Query to get MEMBER list
+export const MEMBER_LIST_QUERY = gql`
   query CompaniesList(
     $filter: CompanyFilter!
     $sorting: [CompanySort!]
@@ -164,6 +164,9 @@ export const USERS_SELECT_QUERY = gql`
     }
   }
 `;
+
+//Query to choose a membership type in the gym
+
 
 // Query to get contacts associated with a company
 export const COMPANY_CONTACTS_TABLE_QUERY = gql`
