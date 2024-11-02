@@ -1,5 +1,16 @@
 import gql from "graphql-tag";
 
+// Query to get member list
+export const MEMBER_LIST_QUERY = gql`
+  query MemberList {
+    members {
+      id
+      firstName
+      lastName
+    }
+  }
+`;
+
 // Query to get Total Company, Contact and Deal Counts
 export const DASHBOARD_TOTAL_COUNTS_QUERY = gql`
   query DashboardTotalCounts {
@@ -43,11 +54,9 @@ export const DASHBOARD_GYM_REVENUE_QUERY = gql`
     $paging: OffsetPaging
   ) {
     dealStages(filter: $filter, sorting: $sorting, paging: $paging) {
-      # Get all deal stages
       nodes {
         id
         title
-        # Get the sum of all deals in this stage and group by closeDateMonth and closeDateYear
         dealsAggregate {
           groupBy {
             closeDateMonth
@@ -58,7 +67,6 @@ export const DASHBOARD_GYM_REVENUE_QUERY = gql`
           }
         }
       }
-      # Get the total count of all deals in this stage
       totalCount
     }
   }
@@ -121,8 +129,8 @@ export const DASHBOARD_LATEST_ACTIVITIES_AUDITS_QUERY = gql`
   }
 `;
 
-// Query to get MEMBER list
-export const MEMBER_LIST_QUERY = gql`
+// Query to get companies list
+export const COMPANIES_LIST_QUERY = gql`
   query CompaniesList(
     $filter: CompanyFilter!
     $sorting: [CompanySort!]
@@ -134,7 +142,6 @@ export const MEMBER_LIST_QUERY = gql`
         id
         name
         avatarUrl
-        # Get the sum of all deals in this company
         dealsAggregate {
           sum {
             value
@@ -152,10 +159,8 @@ export const USERS_SELECT_QUERY = gql`
     $sorting: [UserSort!]
     $paging: OffsetPaging!
   ) {
-    # Get all users
     users(filter: $filter, sorting: $sorting, paging: $paging) {
-      totalCount # Get the total count of users
-      # Get specific fields for each user
+      totalCount
       nodes {
         id
         name
@@ -164,9 +169,6 @@ export const USERS_SELECT_QUERY = gql`
     }
   }
 `;
-
-//Query to choose a membership type in the gym
-
 
 // Query to get contacts associated with a company
 export const COMPANY_CONTACTS_TABLE_QUERY = gql`
@@ -198,7 +200,7 @@ export const TASK_STAGES_QUERY = gql`
     $paging: OffsetPaging!
   ) {
     taskStages(filter: $filter, sorting: $sorting, paging: $paging) {
-      totalCount # Get the total count of task stages
+      totalCount
       nodes {
         id
         title
@@ -215,7 +217,7 @@ export const TASKS_QUERY = gql`
     $paging: OffsetPaging!
   ) {
     tasks(filter: $filter, sorting: $sorting, paging: $paging) {
-      totalCount # Get the total count of tasks
+      totalCount
       nodes {
         id
         title
@@ -223,7 +225,6 @@ export const TASKS_QUERY = gql`
         dueDate
         completed
         stageId
-        # Get user details associated with this task
         users {
           id
           name

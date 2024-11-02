@@ -11,10 +11,10 @@ import {
 import { getDefaultFilter, useGo } from "@refinedev/core";
 import { Input, Space, Table } from "antd";
 
-export const MemberList = ({children}: React.PropsWithChildren) => {
+export const MemberList = ({ children }: React.PropsWithChildren) => {
   const go = useGo();
   const { tableProps, filters } = useTable({
-    resource: "companies",
+    resource: "members",
     pagination: {
       pageSize: 12,
     },
@@ -26,73 +26,60 @@ export const MemberList = ({children}: React.PropsWithChildren) => {
         }
       ],
     },
-      filters: {
-        initial: [
-          {
+    filters: {
+      initial: [
+        {
           field: 'name',
           operator: 'contains',
           value: undefined
-          }
-        ]
-      },
+        }
+      ]
+    },
     meta: {
       gqlQuery: MEMBER_LIST_QUERY,
     }
-  })
+  });
 
   return (
     <div>
-    <List
-      breadcrumb={false}
-      headerButtons={() => (
-        <CreateButton
-          onClick={() => {
-            go({
-              to: {
-                resource: "members", //please refer to the dats for the member
-                action: "create",
-              },
-              options: {
-                keepQuery: true,
-              },
-              type: "replace",
-            });
-          }}
-        />
-      )}
-    >
-      <Table
-        {...tableProps}
-        pagination={{
-          ...tableProps.pagination,
-        }}
+      <List
+        breadcrumb={false}
+        headerButtons={() => (
+          <CreateButton
+            onClick={() => {
+              go({
+                to: {
+                  resource: "members",
+                  action: "create",
+                },
+                options: {
+                  keepQuery: true,
+                },
+                type: "replace",
+              });
+            }}
+          />
+        )}
       >
-        <Table.Column
-          dataIndex=""
-          title="Member List"
-          defaultFilteredValue={getDefaultFilter("id, filters")}
-          filterIcon={<SearchOutlined />}
-          filterDropdown={(props) => (
-            <FilterDropdown {...props}>
-              <Input placeholder="Search Member" />
-            </FilterDropdown>
-          )}
-        />
-        <Table.Column dataIndex="" title="Payments" />
-        <Table.Column
-          dataIndex="id"
-          title="Actions"
-          fixed="right"
-          render={(value) => (
+        <Table
+          {...tableProps}
+          pagination={{
+            ...tableProps.pagination,
+          }}
+        >
+          <Table.Column
+            title="Member List"
+            render={(_, record) => `${record.firstName} ${record.lastName}`}
+          />
+          <Table.Column dataIndex="id" title="Actions" fixed="right" render={(value) => (
             <Space>
               <EditButton hideText size="small" recordItemId={value} />
               <DeleteButton hideText size="small" recordItemId={value} />
             </Space>
-          )}
-        />
-      </Table>
-    </List>
-    {children}
+          )} />
+        </Table>
+      </List>
+      {children}
     </div>
   );
 };
